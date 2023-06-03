@@ -3,6 +3,7 @@ import { Footer } from "./components/Footer";
 
 import { Roboto } from "next/font/google";
 import "./globals.css";
+import CSS from 'csstype';
 import React, { ReactElement } from "react";
 
 const roboto400 = Roboto({
@@ -11,6 +12,9 @@ const roboto400 = Roboto({
   weight: "400",
 });
 
+const bodyStyle: CSS.Properties = {
+  paddingTop: '80px',
+};
 export default function RootLayout({ children }: { children: ReactElement }) {
   return (
     <html lang="en">
