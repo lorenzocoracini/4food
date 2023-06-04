@@ -2,6 +2,8 @@ import { Router } from "express";
 import { ProdutoController } from "./controllers/ProdutoController";
 import { ComboController } from "./controllers/ComboController";
 import { PedidoController } from "./controllers/PedidoController";
+import { UserController } from "./controllers/UserController";
+import { authMiddleware } from "./middlewares/authMiddleware";
 const routes = Router();
 
 routes.post("/produto", new ProdutoController().create);
@@ -11,5 +13,8 @@ routes.post(
   new ComboController().addProduct
 );
 routes.post("/pedido", new PedidoController().create);
+routes.post("/user", new UserController().create);
+routes.post("/login", new UserController().login);
+routes.get("/profile", authMiddleware, new UserController().getProfile);
 
 export default routes;
