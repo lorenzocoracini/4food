@@ -18,7 +18,7 @@ const bodyStyle: CSS.Properties = {
 export default function RootLayout({ children }: { children: ReactElement }) {
   return (
     <html lang="en">
-      <body className={roboto400.className}>
+      <body className={roboto400.className} style={bodyStyle}>
         <Header />
         {children}
         <Footer />
