@@ -1,9 +1,13 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class Default1685815006272 implements MigrationInterface {
-    name = 'Default1685815006272'
+export class Default1685825366649 implements MigrationInterface {
+    name = 'Default1685825366649'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`CREATE TABLE "produtos" ("id" SERIAL NOT NULL, "name" text NOT NULL, "quantity" integer NOT NULL DEFAULT '1', "description" text, "price" numeric NOT NULL, CONSTRAINT "PK_a5d976312809192261ed96174f3" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TABLE "combos" ("id" SERIAL NOT NULL, "name" text NOT NULL, "description" text, CONSTRAINT "PK_5b4bab633aee439e2bade42cc3c" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TABLE "pedidos" ("id" SERIAL NOT NULL, "client_name" text NOT NULL, CONSTRAINT "PK_ebb5680ed29a24efdc586846725" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TABLE "users" ("id" SERIAL NOT NULL, "name" text NOT NULL, CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "produtos_do_combo" ("combosId" integer NOT NULL, "produtosId" integer NOT NULL, CONSTRAINT "PK_2faa90fbcc3e350ed13f916ebac" PRIMARY KEY ("combosId", "produtosId"))`);
         await queryRunner.query(`CREATE INDEX "IDX_807bcf6c15e87972fa0613409a" ON "produtos_do_combo" ("combosId") `);
         await queryRunner.query(`CREATE INDEX "IDX_995f4f1eda837f416fa752a610" ON "produtos_do_combo" ("produtosId") `);
@@ -37,6 +41,10 @@ export class Default1685815006272 implements MigrationInterface {
         await queryRunner.query(`DROP INDEX "public"."IDX_995f4f1eda837f416fa752a610"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_807bcf6c15e87972fa0613409a"`);
         await queryRunner.query(`DROP TABLE "produtos_do_combo"`);
+        await queryRunner.query(`DROP TABLE "users"`);
+        await queryRunner.query(`DROP TABLE "pedidos"`);
+        await queryRunner.query(`DROP TABLE "combos"`);
+        await queryRunner.query(`DROP TABLE "produtos"`);
     }
 
 }

@@ -14,6 +14,9 @@ export class Pedido {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ type: "text" })
+  client_name: string;
+
   @ManyToMany(() => Produto)
   @JoinTable({ name: "produtos_do_pedido" })
   produtos: Produto[];
