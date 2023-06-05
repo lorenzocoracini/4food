@@ -24,7 +24,12 @@ export class ComboController {
     const { combo_id, product_id } = req.params;
 
     try {
-      const combo = await comboRepository.findOneBy({ id: Number(combo_id) });
+      const combo = await comboRepository
+        .createQueryBuilder("combo")
+        .leftJoinAndSelect("combo.produtos", "produtos")
+        .where("combo.id = :id", { id: combo_id })
+        .getOne();
+
       console.log(combo);
       if (!combo) {
         return res.status(404).json({ message: "Combo does not exist" });
@@ -37,9 +42,10 @@ export class ComboController {
       if (!product) {
         return res.status(404).json({ message: "Product does not exist" });
       }
-
+      console.log(combo.produtos);
       combo.produtos.push(product);
       await comboRepository.save(combo);
+      return res.status(201).json(combo.produtos);
     } catch (erro) {
       console.log(erro);
       return res.status(500).json({ message: "Internal Server Error" });
