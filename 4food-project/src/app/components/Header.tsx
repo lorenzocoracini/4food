@@ -20,7 +20,7 @@ export function Header() {
   ]
 
   return (
-    <div className='flex justify-around  items-center m-4 w-full h-20 fixed top-0 z-50'>
+    <div className='flex justify-around  items-center p-4 w-full h-24 fixed top-0 z-50 bg-white'>
       <div className=''>
         <Image src={logo} alt="Logo 4Food" className='w-48 hover:scale-95 hover:opacity-60 duration-300'/>
       </div>

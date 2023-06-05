@@ -1,7 +1,5 @@
 import Image from "next/image";
 
-import Logo from "@images/";
-
 export function Footer() {
   return (
     <footer className="bg-black h-20 text-white">
