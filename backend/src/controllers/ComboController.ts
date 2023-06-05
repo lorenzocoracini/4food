@@ -29,8 +29,6 @@ export class ComboController {
         .leftJoinAndSelect("combo.produtos", "produtos")
         .where("combo.id = :id", { id: combo_id })
         .getOne();
-
-      console.log(combo);
       if (!combo) {
         return res.status(404).json({ message: "Combo does not exist" });
       }
@@ -38,11 +36,10 @@ export class ComboController {
       const product = await productRepository.findOneBy({
         id: Number(product_id),
       });
-      console.log(product);
       if (!product) {
         return res.status(404).json({ message: "Product does not exist" });
       }
-      console.log(combo.produtos);
+
       combo.produtos.push(product);
       await comboRepository.save(combo);
       return res.status(201).json(combo.produtos);
