@@ -4,11 +4,12 @@ import { ComboController } from "./controllers/ComboController";
 import { PedidoController } from "./controllers/PedidoController";
 import { UserController } from "./controllers/UserController";
 import { authMiddleware } from "./middlewares/authMiddleware";
+import { LoginController } from "./controllers/LoginController";
 const routes = Router();
 
 routes.post("/user", new UserController().create);
-routes.post("/login", new UserController().login);
-routes.get("/profile", authMiddleware, new UserController().getProfile);
+routes.post("/login", new LoginController().login);
+routes.get("/profile", authMiddleware, new LoginController().getProfile);
 
 routes.post("/produto", new ProdutoController().create);
 
