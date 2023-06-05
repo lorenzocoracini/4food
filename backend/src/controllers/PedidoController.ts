@@ -2,18 +2,26 @@ import { Request, Response } from "express";
 import { pedidoRepository } from "../repositories/pedidoRepository";
 import { productRepository } from "../repositories/productRepository";
 import { comboRepository } from "../repositories/comboRepository";
+import { userRepository } from "../repositories/userRepository";
 export class PedidoController {
   async create(req: Request, res: Response) {
-    const { client_name } = req.body;
-    if (!client_name) {
-      return res.status(400).json({ message: "Client Name is required" });
+    const { client_id } = req.params;
+    if (!client_id) {
+      return res.status(400).json({ message: "Client Id is required" });
     }
     try {
-      const newPedido = pedidoRepository.create({
-        client_name,
+      const user = await userRepository.findOneBy({
+        id: Number(client_id),
       });
+      if (!user) {
+        return res.status(404).json({ message: "Client does not exist" });
+      }
+      const newPedido = pedidoRepository.create();
+      newPedido.client = user;
       await pedidoRepository.save(newPedido);
-      return res.status(201).json(newPedido);
+
+      const { password, ...userWithoutPassword } = user;
+      return res.status(201).json({ ...newPedido, client: userWithoutPassword });
     } catch (erro) {
       console.log(erro);
       return res.status(500).json({ message: "Internal Server Error" });
