@@ -11,7 +11,7 @@ routes.post("/user", new UserController().create);
 routes.post("/login", new LoginController().login);
 routes.get("/profile", authMiddleware, new LoginController().getProfile);
 
-routes.post("/produto", new ProdutoController().create);
+routes.post("/product", new ProdutoController().create);
 
 routes.post("/combo", new ComboController().create);
 routes.post(
@@ -23,6 +23,10 @@ routes.post("/pedido/:client_id", new PedidoController().create);
 routes.post(
   "/pedido/:pedido_id/add_product/:product_id",
   new PedidoController().addProduct
+);
+routes.post(
+  "/pedido/:pedido_id/remove_product/:product_id",
+  new PedidoController().removeProduct
 );
 routes.post(
   "/pedido/:pedido_id/add_combo/:combo_id",

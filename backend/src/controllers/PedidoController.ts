@@ -21,7 +21,9 @@ export class PedidoController {
       await pedidoRepository.save(newPedido);
 
       const { password, ...userWithoutPassword } = user;
-      return res.status(201).json({ ...newPedido, client: userWithoutPassword });
+      return res
+        .status(201)
+        .json({ ...newPedido, client: userWithoutPassword });
     } catch (erro) {
       console.log(erro);
       return res.status(500).json({ message: "Internal Server Error" });
@@ -52,6 +54,37 @@ export class PedidoController {
       return res.status(201).json(pedido.produtos);
     } catch (erro) {
       console.log(erro);
+      return res.status(500).json({ message: "Internal Server Error" });
+    }
+  }
+
+  async removeProduct(req: Request, res: Response) {
+    const { pedido_id, product_id } = req.params;
+
+    try {
+      const pedido = await pedidoRepository
+        .createQueryBuilder("pedido")
+        .leftJoinAndSelect("pedido.produtos", "produtos")
+        .where("pedido.id = :id", { id: pedido_id })
+        .getOne();
+      if (!pedido) {
+        return res.status(404).json({ message: "Pedido does not exist" });
+      }
+
+      const productIndex = pedido.produtos.findIndex(
+        (product) => product.id === Number(product_id)
+      );
+      if (productIndex === -1) {
+        return res
+          .status(404)
+          .json({ message: "Product does not exist in the order" });
+      }
+
+      pedido.produtos.splice(productIndex, 1);
+      await pedidoRepository.save(pedido);
+      return res.status(200).json(pedido.produtos);
+    } catch (error) {
+      console.log(error);
       return res.status(500).json({ message: "Internal Server Error" });
     }
   }
