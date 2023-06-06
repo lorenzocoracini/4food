@@ -19,6 +19,11 @@ routes.post(
   new ComboController().addProduct
 );
 
+routes.post(
+  "/combo/:combo_id/remove_product/:product_id",
+  new ComboController().removeProduct
+);
+
 routes.post("/pedido/:client_id", new PedidoController().create);
 routes.post(
   "/pedido/:pedido_id/add_product/:product_id",
@@ -31,6 +36,10 @@ routes.post(
 routes.post(
   "/pedido/:pedido_id/add_combo/:combo_id",
   new PedidoController().addCombo
+);
+routes.post(
+  "/pedido/:pedido_id/remove_combo/:combo_id",
+  new PedidoController().removeCombo
 );
 
 export default routes;

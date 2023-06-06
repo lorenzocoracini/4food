@@ -117,4 +117,35 @@ export class PedidoController {
       return res.status(500).json({ message: "Internal Server Error" });
     }
   }
+
+  async removeCombo(req: Request, res: Response) {
+    const { pedido_id, combo_id } = req.params;
+
+    try {
+      const pedido = await pedidoRepository
+        .createQueryBuilder("pedido")
+        .leftJoinAndSelect("pedido.combos", "combos")
+        .where("pedido.id = :id", { id: pedido_id })
+        .getOne();
+      if (!pedido) {
+        return res.status(404).json({ message: "Pedido does not exist" });
+      }
+
+      const comboIndex = pedido.combos.findIndex(
+        (combo) => combo.id === Number(combo_id)
+      );
+      if (comboIndex === -1) {
+        return res
+          .status(404)
+          .json({ message: "Combo does not exist in the order" });
+      }
+
+      pedido.combos.splice(comboIndex, 1);
+      await pedidoRepository.save(pedido);
+      return res.status(200).json(pedido.combos);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: "Internal Server Error" });
+    }
+  }
 }
