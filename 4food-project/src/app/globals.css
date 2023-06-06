@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  src: url("./../../public/fonts/Metropolis-Regular.otf");
+  font-family: "Metropolis Regular";
+}
+
 body {
   background-color: #ffffff;
+  font-family: Metropolis Regular;
 }
