@@ -1,10 +1,11 @@
-import { Header } from "./components/Header";
-import { Footer } from "./components/Footer";
+import React, { ReactElement } from "react";
+import CSS from "csstype";
+import "./globals.css";
 
 import { Roboto } from "next/font/google";
-import "./globals.css";
-import CSS from 'csstype';
-import React, { ReactElement } from "react";
+
+import { Header } from "./components/Header";
+import { Footer } from "./components/Footer";
 
 const roboto400 = Roboto({
   subsets: ["latin"],
@@ -13,12 +14,13 @@ const roboto400 = Roboto({
 });
 
 const bodyStyle: CSS.Properties = {
-  paddingTop: '96px',
+  paddingTop: "96px",
 };
+
 export default function RootLayout({ children }: { children: ReactElement }) {
   return (
     <html lang="en">
-      <body className={roboto400.className} style={bodyStyle}>
+      <body style={bodyStyle}>
         <Header />
         {children}
         <Footer />

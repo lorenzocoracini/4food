@@ -29,7 +29,7 @@ export function Home() {
           visible: { opacity: 1, y: 0 },
         }}
         initial="hidden"
-        animate={mainControls}
+        animate={"visible"}
         transition={{
           duration: 0.5,
           delay: 0.25,

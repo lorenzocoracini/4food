@@ -20,7 +20,7 @@ export function ComeAndVisitUs() {
         }}
       > */}
       <div className="w-full flex flex-col items-center justify-center relative">
-        <div className="flex flex-col justify-center items-center bg-black w-33 p-6 text-white absolute left-32 md:left-56 top-0">
+        <div className="flex flex-col justify-center items-center bg-black w-33 p-6 text-white xl:absolute xl:left-32 md:left-56 top-0">
           <p className="text-xl font-bold tracking-wider">RESERVA</p>
           <div className="w-full h-1 border-b border-solid pt-6 mb-8"></div>
           <p className="py-1 mb-8 text-xl font-bold tracking-widest">
@@ -36,7 +36,7 @@ export function ComeAndVisitUs() {
             CONHEÇA
           </button>
         </div>
-        <div className="w-2/5 ml-96">
+        <div className="w-96 pt-4 xl:pt-0 xl:w-37 xl:ml-96 ">
           <p className="text-2xl text-black mb-6">私達はあなたを待っている！</p>
           <h1 className="font-bold text-4xl mb-6">Venha e nos visite!</h1>
           <p className="text-lg text-gray-500 mb-6">
