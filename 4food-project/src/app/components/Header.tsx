@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import logo from '@images/logo-4food.png'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
+import { Button } from './Button';
 
 export function Header() {
   const links = [
@@ -31,7 +32,11 @@ export function Header() {
       <ul className="flex gap-20">
 
         {links.map((link) => <li key={link.id}><Link href={link.link} className='text-2xl font-normal 
+<<<<<<< HEAD
         hover:opacity-60 duration-300 '>
+=======
+        hover:opacity-60 duration-300'>
+>>>>>>> gui
           {link.name}
         </Link></li>)}
 
@@ -39,8 +44,14 @@ export function Header() {
 
       <div className='flex justify-center items-center gap-11'>
         <button  className='text-4xl hover:opacity-60 hover:scale-95 duration-300'><AiOutlineShoppingCart /></button>
+<<<<<<< HEAD
         <Link href="/login"><button className='bg-black text-white px-14 py-4 hover:opacity-60 hover:-translate-y-1 
         duration-300 text-xl'>Entrar</button></Link>
+=======
+        <Link href="/login">
+          <Button>Entrar</Button>
+        </Link>
+>>>>>>> gui
       </div>
     </div>
   );
