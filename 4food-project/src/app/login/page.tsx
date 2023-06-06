@@ -5,8 +5,8 @@ export default function Login() {
       bg-cover bg-center relative">
         <div className="flex justify-center items-center flex-col bg-white bg-opacity-80 w-5/12 h-3/4
          text-black absolute p-4 rounded">
-          <h1 className="text-3xl p-2 absolute top-24 border-b border-black">Faça o Login</h1>
-          <form action="" className="">
+          <h1 className="text-3xl p-2 absolute top-16 border-b border-black">Faça o Login</h1>
+          <form action="" className="mt-4">
             <div className='mb-2'>
               <label htmlFor="input_email" className='block text-xl mb-2'>Email</label>
               <input id="input_email" type="text" placeholder="Digite seu email" className='py-3 px-4 w-72
