@@ -11,3 +11,13 @@ body {
   background-color: #ffffff;
   font-family: Metropolis Regular;
 }
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: var(--red);
+  transform-origin: 0%;
+}
