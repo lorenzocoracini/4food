@@ -8,38 +8,38 @@ export function Header() {
   const links = [
     {
       id: 1,
-      name: "Início",
+      name: "início",
       link: "/"
     },
     {
       id: 2,
-      name: "Sobre",
+      name: "sobre",
       link: "/sobre"
     },
     {
       id: 3,
-      name: "Cardápio",
+      name: "cardápio",
       link: "/cardapio"
     },
   ]
 
   return (
-    <div className='flex justify-around  items-center p-4 w-full h-24 fixed top-0 z-50 bg-white'>
+    <div className='flex justify-around items-center p-6 w-full h-24 fixed top-0 z-50 bg-white'>
       <div className=''>
         <Image src={logo} alt="Logo 4Food" className='w-48 hover:scale-95 
         hover:opacity-60 duration-300'/>
       </div>
       <ul className="flex gap-20">
 
-        {links.map((link) => <li key={link.id}><Link href={link.link} className='text-2xl font-normal 
-        hover:opacity-60 duration-300'>
+        {links.map((link) => <li key={link.id}><Link href={link.link} className='text-lg 
+        hover:opacity-60 duration-300 uppercase tracking-widest font-bold'>
           {link.name}
         </Link></li>)}
 
       </ul>
 
       <div className='flex justify-center items-center gap-11'>
-        <button  className='text-4xl hover:opacity-60 hover:scale-95 duration-300'><AiOutlineShoppingCart /></button>
+        <button  className='text-3xl hover:opacity-60 hover:scale-95 duration-300'><AiOutlineShoppingCart /></button>
         <Link href="/login">
           <Button>Entrar</Button>
         </Link>
