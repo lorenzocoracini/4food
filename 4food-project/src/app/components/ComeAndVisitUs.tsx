@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 export function ComeAndVisitUs() {
   return (
-    <section className="w-full">
+    <section className="w-full mt-20">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
