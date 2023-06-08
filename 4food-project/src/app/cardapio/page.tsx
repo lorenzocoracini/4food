@@ -3,7 +3,10 @@ import exemplo from "@images/sushiexemplo.jpg"
 
 export default function Cardapio() {
   return (
-    <div className="w-full p-8 flex flex-wrap gap-4 justify-center">
+    <div className="w-full p-8 md:grid md:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-2 items-center 
+    justify-center lg:flex lg:flex-wrap">
+      <ItemMenu price={19.99} name="Sushi" image={exemplo} description="Sushizinho muito saboroso"/>
+      <ItemMenu price={19.99} name="Sushi" image={exemplo} description="Sushizinho muito saboroso"/>
       <ItemMenu price={19.99} name="Sushi" image={exemplo} description="Sushizinho muito saboroso"/>
       <ItemMenu price={19.99} name="Sushi" image={exemplo} description="Sushizinho muito saboroso"/>
       <ItemMenu price={19.99} name="Sushi" image={exemplo} description="Sushizinho muito saboroso"/>
