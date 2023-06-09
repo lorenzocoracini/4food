@@ -54,7 +54,7 @@ export function Header() {
         </button>
 
         <Link href="/login" className=' hidden lg:block'>
-          <Button>Entrar</Button>
+          <Button onClick={undefined} style={undefined}>Entrar</Button>
         </Link>
 
       </div>
@@ -71,7 +71,7 @@ export function Header() {
 
         <li>
           <Link href="/login" className='block px-3 py-4'>
-            <Button>Entrar</Button>
+            <Button onClick={undefined} style={undefined}>Entrar</Button>
           </Link>
         </li>
 
