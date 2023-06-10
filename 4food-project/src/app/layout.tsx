@@ -19,7 +19,7 @@ const bodyStyle: CSS.Properties = {
 
 export default function RootLayout({ children }: { children: ReactElement }) {
   return (
-    <html lang="en">
+    <html lang="en" className='w-full'>
       <body style={bodyStyle}>
         <Header />
         {children}
