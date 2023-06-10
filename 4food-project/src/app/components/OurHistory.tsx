@@ -1,5 +1,5 @@
 import ilustração from '@images/pexels-elif-tekkaya-5616153.jpg'
-import restaurante from '@images/pexels-vicky-tran-2317542.jpg'
+import restaurante from '@images/restaurante.jpg'
 import Image from 'next/image'
 
 export function OurHistory () {

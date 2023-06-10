@@ -1,5 +1,7 @@
 import AboutUs from "../components/AboutUs";
 import { OurHistory } from "../components/OurHistory";
+import LocalizationCarousel from "../components/localizationCarousel";
+
 
 
 export default function Sobre() {
@@ -7,6 +9,7 @@ export default function Sobre() {
     <section className="p-5">
         <AboutUs />
         <OurHistory />
+        <LocalizationCarousel />
     </section>
 );
 }
