@@ -23,7 +23,7 @@ export default function Cardapio() {
         <p className="text-gray-900 text-xl mb-3">メニュー</p>
         <h1 className="text-4xl font-bold">NOSSO MENU</h1>
       </div>
-      <div className="flex justify-center gap-2 my-3">
+      <div className="flex justify-center flex-wrap gap-2 my-3">
         <button className={`px-14 py-4 hover:opacity-80 hover:-translate-y-1 
         duration-300 text-xl ${activeItem === 'principal' ? styleButtonActive : styleButtonNotActive}`} 
         onClick={() => handleClick("principal")}>PRINCIPAIS</button>

@@ -1,5 +1,10 @@
+import AboutUs from "../components/AboutUs";
+
+
 export default function Sobre() {
     return (
-        <div>Aqui é o sobre</div>
-    );
+    <section>
+        <AboutUs />
+    </section>
+);
 }
