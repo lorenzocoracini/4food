@@ -15,18 +15,18 @@ export function PhotoSection() {
         transition={{ duration: 0.5, delay: 0.3 }}
       >
         <div className="lg:relative">
-          <div className="flex flex-col items-center justify-center px-4 gap-4 lg:z-index-50 absolute  lg:gap-16 xl:gap-40">
-            <Image src={imagem1} width={460} alt="salmao" />
+          <div className="flex flex-col items-center justify-center gap-4 md:px-0 xl:z-index-50 xl:absolute xl:flex-row xl:gap-12 2xl:gap-60">
+            <Image src={imagem1} width={460} alt="salmao" className="lg:mr-1" />
             <Image
               src={imagem2}
               width={460}
               alt="sushi-com-graozinho"
-              className="lg:mt-36"
+              className="xl:mt-36"
             />
-            <Image src={imagem3} width={455} alt="lamen" />
+            <Image src={imagem3} width={460} alt="lamen" />
           </div>
-          <div className="h-72"></div>
-          <div className="h-33 bg-black"></div>
+          <div className="h-72 hidden lg:block"></div>
+          <div className="h-33 hidden bg-black xl:block"></div>
         </div>
       </motion.div>
     </section>
