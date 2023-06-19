@@ -23,7 +23,7 @@ export function Home() {
   }, [isInView]);
 
   return (
-    <main>
+    <main className="px-4 xl:px-0">
       <IntroductionSection />
       <PhotoSection />
       <PhilosophySection />

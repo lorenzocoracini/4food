@@ -15,21 +15,16 @@ export function PhilosophySection() {
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.5 }}
       >
-        <div className="">
-          <div className="flex w-full gap-4">
-            <div>
+        <div>
+          <div className="flex flex-col w-full gap-4 xl:px-0 xl:flex-row ">
+            <div className="order-last xl:order-none">
               <Image src={HomemSushi} width={470} alt="mapa" />
             </div>
-            <div className="flex flex-col gap-6 pt-24">
-              <Image src={PratoComSushi} width={300} alt="mapa" />
-              <Image
-                src={BandejaSushi}
-                width={300}
-                alt="mapa"
-                className="h-27"
-              />
+            <div className="flex flex-col gap-4 order-last xl:order-none xl:pt-24 ">
+              <Image src={PratoComSushi} width={350} alt="mapa" />
+              <Image src={BandejaSushi} width={350} alt="mapa" />
             </div>
-            <div className="w-96 py-28 mx-20 flex flex-col justify-start">
+            <div className="w-full xl:w-96 pb-16 xl:py-28 flex flex-col justify-start xl:mx-20 ">
               <p className="text-2xl text-black mb-6">
                 私達はあなたを待っている！
               </p>

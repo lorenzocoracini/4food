@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 export function ComeAndVisitUs() {
   return (
-    <section className="w-full mt-20">
+    <section className="w-full mt-20 xl:mt-56">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -14,7 +14,7 @@ export function ComeAndVisitUs() {
         transition={{ duration: 0.5, delay: 0.5 }}
       >
         <div className="w-full flex flex-col items-center justify-center xl:relative">
-          <div className="flex flex-col justify-center items-center bg-black xl:w-33 p-6 text-white xl:absolute xl:left-32 md:left-56 top-0">
+          <div className="flex flex-col justify-center items-center bg-black xl:w-33 py-6 px-3 text-white xl:absolute xl:left-32 md:left-56 top-0">
             <p className="text-xl font-bold tracking-wider">RESERVA</p>
             <div className="w-full h-1 border-b border-solid pt-6 mb-8"></div>
             <p className="py-1 mb-8 text-xl font-bold tracking-widest">
