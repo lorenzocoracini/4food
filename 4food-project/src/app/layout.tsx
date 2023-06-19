@@ -19,11 +19,11 @@ const bodyStyle: CSS.Properties = {
 
 export default function RootLayout({ children }: { children: ReactElement }) {
   return (
-    <html lang="en" className='w-full'>
+    <html lang="en">
       <body style={bodyStyle}>
         <Header />
         {children}
-        <Footer />
+        {/* <Footer /> */}
       </body>
     </html>
   );

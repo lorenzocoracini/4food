@@ -8,6 +8,10 @@ export function IntroductionSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
+  function goOrder() {
+    console.log("Vamos pedir um sushizin?");
+  }
+
   return (
     <section className="text-center w-full">
       <motion.div
@@ -24,7 +28,7 @@ export function IntroductionSection() {
           rem ipsa magni, reiciendis modi sunt sequi rerum qui fugiat inventore.
         </p>
         <div className="mx-20 my-6">
-          <Button>FAZER PEDIDO</Button>
+          <Button onClick={goOrder}>FAZER PEDIDO</Button>
         </div>
       </motion.div>
     </section>

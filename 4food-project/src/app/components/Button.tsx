@@ -1,10 +1,10 @@
 import React from "react";
-import CSS from "csstype"
+import CSS from "csstype";
 
 type Props = {
   children: string | JSX.Element;
   onClick: React.MouseEventHandler | undefined;
-  style: CSS.Properties | undefined
+  style?: CSS.Properties | undefined;
 };
 
 export function Button({ children, onClick, style }: Props) {
