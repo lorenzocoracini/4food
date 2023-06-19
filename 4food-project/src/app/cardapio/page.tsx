@@ -38,7 +38,7 @@ export default function Cardapio() {
         onClick={() => handleClick("combos")}>COMBOS</button>
       </div>
       <div
-        className="w-full py-8 px-32 md:grid md:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 items-center 
+        className="w-full py-8 px-8 lg:px-32 md:grid md:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 items-center 
       justify-center lg:flex lg:flex-wrap"
       >
         <ItemMenu
