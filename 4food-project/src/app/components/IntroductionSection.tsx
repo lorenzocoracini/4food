@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import Link from "next/link";
 
 export function IntroductionSection() {
   const ref = useRef(null);
@@ -26,8 +27,9 @@ export function IntroductionSection() {
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus
           rem ipsa magni, reiciendis modi sunt sequi rerum qui fugiat inventore.
         </p>
-        <button
-          className="px-28 my-2 bg-black
+        <Link href="/cardapio" className="block px-3 py-4">
+          <button
+            className="px-28 my-2 bg-black
             text-white
             py-6
             mt-20
@@ -35,9 +37,10 @@ export function IntroductionSection() {
             hover:-translate-y-1
             duration-300
             text-xl"
-        >
-          Fazer Pedido
-        </button>
+          >
+            Fazer Pedido
+          </button>
+        </Link>
       </motion.div>
     </section>
   );
