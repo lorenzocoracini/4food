@@ -34,7 +34,7 @@ export default function LocalizationCarousel () {
                 <p className='text-gray-400'>Venha conhecer nossos restaurantes, abaixo estão os endereços das nossas unidades!</p>
             </div>
             <div className='flex justify-center items-center relative'>
-                <div onClick={changePreviousImage} className='w-16 h-16 border border-black bg-white 
+                <div onClick={changePreviousImage} className='w-16 h-16 border border-black border-solid bg-white 
                 flex justify-center items-center mr-20 hover:scale-95 hover:cursor-pointer duration-300'>
                     <GrPrevious />
                 </div>
@@ -42,7 +42,7 @@ export default function LocalizationCarousel () {
                     <Image src={images[changeImage].image} alt="restaurant location" width={500}/>
                     <p className='w-auto max-w-[300] px-5 py-5 bg-white z-50 absolute bottom-10 left-14'>{images[changeImage].adress}</p>
                 </div>
-                <div onClick={changeNextImage} className='w-16 h-16 border border-black bg-white 
+                <div onClick={changeNextImage} className='w-16 h-16 border border-black border-solid bg-white 
                 flex justify-center items-center ml-20 hover:scale-95 hover:cursor-pointer duration-300'>
                     <GrNext />
                 </div>

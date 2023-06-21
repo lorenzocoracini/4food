@@ -1,8 +1,6 @@
 "use client";
 import { ItemMenu } from "../components/ItemMenu";
 import exemplo from "@images/sushiexemplo.jpg";
-import CSS from "csstype";
-import { color } from "framer-motion";
 import { useState } from "react";
 
 export default function Cardapio() {
