@@ -6,6 +6,7 @@ import { Roboto } from "next/font/google";
 
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
+import { CartContextProvider } from "context/CartContext";
 
 const roboto400 = Roboto({
   subsets: ["latin"],
@@ -22,7 +23,9 @@ export default function RootLayout({ children }: { children: ReactElement }) {
     <html lang="en">
       <body style={bodyStyle}>
         <Header />
-        {children}
+        <CartContextProvider>
+          {children}
+        </CartContextProvider>
         {/* <Footer /> */}
       </body>
     </html>
