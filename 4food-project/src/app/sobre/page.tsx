@@ -6,7 +6,7 @@ import LocalizationCarousel from "../components/localizationCarousel";
 
 export default function Sobre() {
     return (
-    <section className="p-5">
+    <section className="lg:p-5">
         <AboutUs />
         <OurHistory />
         <LocalizationCarousel />
