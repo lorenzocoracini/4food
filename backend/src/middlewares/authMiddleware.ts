@@ -12,7 +12,7 @@ export const authMiddleware = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { authorization } = req.headers;
+  const { authorization } = req.body;
 
   if (!authorization) {
     throw new UnauthorizedError("Não enviou o token nos headers!");
