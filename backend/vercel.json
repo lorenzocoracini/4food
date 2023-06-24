@@ -3,10 +3,7 @@
   "builds": [
     {
       "src": "src/index.ts",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": ["build/**"]
-      }
+      "use": "@vercel/node"
     }
   ],
   "routes": [
@@ -14,8 +11,5 @@
       "src": "(.*)",
       "dest": "src/index.ts"
     }
-  ],
-  "hooks": {
-    "postbuild": "npm run migration:run"
-  }
+  ]
 }
