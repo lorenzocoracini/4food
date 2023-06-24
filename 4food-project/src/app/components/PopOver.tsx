@@ -14,6 +14,18 @@ const PopOver = () => {
         preco: `R$ ${12.0}`,
         id: "1",
       },
+      {
+        nome: "sushi",
+        quantidade: 4,
+        preco: `R$ ${12.0}`,
+        id: "1",
+      },
+      {
+        nome: "sushi",
+        quantidade: 4,
+        preco: `R$ ${12.0}`,
+        id: "1",
+      },
     ],
     combos: [
       {
@@ -31,14 +43,14 @@ const PopOver = () => {
           <AiOutlineShoppingCart size={32} />
         </button>
       </Popover.Trigger>
-      <Popover.Portal>
+      <Popover.Portal className="mt-10">
         <Popover.Content
-          className="PopoverContent bg-gray-900 p-4 rounded"
+          className="PopoverContent z-50 bg-white border border-black border-solid p-4 rounded"
           sideOffset={5}
         >
           <div
             style={{ display: "flex", flexDirection: "column", gap: 10 }}
-            className="text-white max-w-xs pt-10"
+            className="text-black max-w-xs pt-6"
           >
             <p className="text-start font-bold text-sm pl-8">Produtos</p>
             {pedido.produtos.map((produto) => {
@@ -47,19 +59,19 @@ const PopOver = () => {
 
             <Link href="/finalizar_pedido" className="block px-3 py-4">
               <div className="flex justify-center">
-                <button className="text-md bg-white text-black px-6 py-2 hover:opacity-60 hover:scale-95 duration-300">
+                <button className="text-md bg-black text-white px-6 py-2 hover:opacity-60 hover:scale-95 duration-300">
                   Finalizar Pedido
                 </button>
               </div>
             </Link>
           </div>
           <Popover.Close
-            className="absolute top-10 right-4 h-8 w-8 items-center justify-center rounded-2xl bg-white inline-flex"
+            className="absolute top-6 right-4 h-8 w-8 border border-solid border-black items-center justify-center rounded-2xl bg-white inline-flex"
             aria-label="Close"
           >
             <RxCross2 />
           </Popover.Close>
-          <Popover.Arrow className="fill-black" />
+          <Popover.Arrow className="fill-black mb-4" />
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>
