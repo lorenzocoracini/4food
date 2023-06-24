@@ -1,10 +1,13 @@
 "use client";
-import React, { useEffect } from "react";
+import "./globals.css";
+
+import React, { useEffect, useRef } from "react";
+import { useInView, useAnimation } from "framer-motion";
+
+import { PhotoSection } from "./components/PhotosSection";
 import { ComeAndVisitUs } from "./components/ComeAndVisitUs";
 import { IntroductionSection } from "./components/IntroductionSection";
-import { PhotoSection } from "./components/PhotosSection";
-import { useRef } from "react";
-import { motion, useInView, useAnimation } from "framer-motion";
+import { PhilosophySection } from "./components/PhilosophySection";
 
 export function Home() {
   const ref = useRef(null);
@@ -16,28 +19,16 @@ export function Home() {
     if (isInView) {
       mainControls.start("visible");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isInView]);
 
   return (
-    <div className="w-full">
+    <main className="px-4 xl:px-0">
       <IntroductionSection />
-
       <PhotoSection />
-      <motion.div
-        variants={{
-          hidden: { opacity: 0, y: 75 },
-          visible: { opacity: 1, y: 0 },
-        }}
-        initial="hidden"
-        animate={"visible"}
-        transition={{
-          duration: 0.5,
-          delay: 0.25,
-        }}
-      >
-        <ComeAndVisitUs />
-      </motion.div>
-    </div>
+      <PhilosophySection />
+      <ComeAndVisitUs />
+    </main>
   );
 }
 
