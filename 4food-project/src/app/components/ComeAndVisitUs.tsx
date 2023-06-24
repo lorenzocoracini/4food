@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 export function ComeAndVisitUs() {
   return (
-    <section className="w-full mt-20 xl:mt-56">
+    <section className="w-full mt-28 xl:mt-56">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -30,7 +30,7 @@ export function ComeAndVisitUs() {
               CONHEÇA
             </button>
           </div>
-          <div className="p-4 xl:pt-0 xl:w-37 xl:ml-96 ">
+          <div className="p-4 md:mt-12 xl:pt-0 xl:w-37 xl:ml-96 ">
             <p className="text-2xl text-black mb-6">
               私達はあなたを待っている！
             </p>

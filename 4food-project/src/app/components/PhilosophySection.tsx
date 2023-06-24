@@ -16,7 +16,7 @@ export function PhilosophySection() {
         transition={{ duration: 0.5, delay: 0.5 }}
       >
         <div>
-          <div className="flex flex-col w-full gap-4 xl:px-0 xl:flex-row ">
+          <div className="flex flex-col w-full gap-4 md:justify-center md:items-center xl:px-0 xl:flex-row ">
             <div className="order-last xl:order-none">
               <Image src={HomemSushi} width={470} alt="mapa" />
             </div>

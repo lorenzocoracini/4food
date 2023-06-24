@@ -29,7 +29,7 @@ export function IntroductionSection() {
         </p>
         <Link href="/cardapio" className="block px-3 py-4">
           <button
-            className="px-28 my-2 bg-black
+            className="px-24 my-2 bg-black
             text-white
             py-6
             mt-20
