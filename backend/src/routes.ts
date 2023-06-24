@@ -10,6 +10,7 @@ const routes = Router();
 routes.post("/user", new UserController().create);
 routes.post("/login", new LoginController().login);
 routes.get("/profile", authMiddleware, new LoginController().getProfile);
+routes.delete("/user/:user_id", new UserController().delete);
 routes.put("/user/:user_id", new UserController().update);
 routes.post("/product", new ProdutoController().create);
 

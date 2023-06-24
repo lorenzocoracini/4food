@@ -56,4 +56,21 @@ export class UserController {
       return res.status(500).json({ error: "Internal Server Error" });
     }
   }
+  async delete(req: Request, res: Response) {
+    const userId = req.params;
+
+    try {
+      const user = await userRepository.findOne(userId);
+      if (!user) {
+        throw new BadRequestError("User not found");
+      }
+
+      await userRepository.remove(user);
+
+      return res.json({ message: "User deleted successfully" });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  }
 }
