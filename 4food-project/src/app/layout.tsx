@@ -15,7 +15,7 @@ const roboto400 = Roboto({
 });
 
 const bodyStyle: CSS.Properties = {
-  paddingTop: "144px",
+  paddingTop: "85px",
 };
 
 export default function RootLayout({ children }: { children: ReactElement }) {
