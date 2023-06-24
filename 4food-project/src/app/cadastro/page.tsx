@@ -1,9 +1,9 @@
 'use client'
 
-export default function Login() {
+export default function Cadastro() {
     return (
       <section className="h-screen w-full flex justify-center items-center bg-[url('../../public/images/background-tela-login.jpg')]
-      bg-cover bg-center relative ">
+      bg-cover bg-center relative mt-5 lg:mt-8">
         <div className="flex flex-col justify-center items-center bg-white bg-opacity-80
          text-black absolute rounded w-3/4 lg:p-4 lg:w-2/3 lg:h-auto">
             <h1 className="text-2xl lg:text-3xl my-8 border-b border-black border-solid">Cadastre-se</h1>
