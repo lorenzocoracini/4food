@@ -43,7 +43,7 @@ export function Header() {
         />
       </div>
 
-      <ul className="p-4 hidden gap-20 lg:flex justify-center">
+      <ul className="p-4 hidden gap-20 lg:flex justify-center pl-28">
         {links.map((link) => (
           <li key={link.id}>
             <Link
@@ -58,7 +58,11 @@ export function Header() {
       </ul>
 
       <div className="flex justify-center items-center gap-11">
-        <PopOver />
+        <Link href="/finalizar_pedido" className="block px-3 py-4">
+          <button className="text-3xl hover:opacity-60 hover:scale-95 duration-300">
+            <AiOutlineShoppingCart />
+          </button>
+        </Link>
 
         <button
           className="text-2xl lg:hidden"

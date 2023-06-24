@@ -1,14 +1,13 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import * as RadioGroup from "@radix-ui/react-radio-group";
 import { useForm } from "react-hook-form";
 
-import { motion, useInView } from "framer-motion";
 import { ProductCard } from "../components/ProductCard";
 
 export default function IntroductionSection() {
-  const ref = useRef(null);
-
   const [pedido, setPedido] = useState({
     produtos: [
       {
@@ -34,14 +33,13 @@ export default function IntroductionSection() {
     watch,
     formState: { errors },
   } = useForm();
-  const isInView = useInView(ref, { once: true });
 
   function onSubmit() {
     console.log("Vamos pedir um sushizin?");
   }
 
   return (
-    <main className="w-full px-4">
+    <main className="w-full px-4 flex items-center justify-center">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -50,7 +48,7 @@ export default function IntroductionSection() {
       >
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col lg:flex-row"
+          className="flex flex-col lg:flex-row lg:justify-center"
         >
           <div>
             <p className="font-bold text-lg">Complete seu pedido</p>
@@ -113,35 +111,56 @@ export default function IntroductionSection() {
                   pagar.
                 </p>
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="cartao_de_credito">
-                    CARTÃO DE CRÉDITO
-                    <input
-                      type="radio"
-                      name="cartao_de_credito"
-                      id="cartao_de_credito"
-                    />
-                  </label>
-
-                  <label htmlFor="cartao_de_debito">
-                    CARTÃO DE DÉBITO
-                    <input
-                      type="radio"
-                      name="cartao_de_debito"
-                      id="cartao_de_debito"
-                    />
-                  </label>
-                  <label htmlFor="dinheiro">
-                    DINHEIRO
-                    <input type="radio" name="dinheiro" id="dinheiro" />
-                  </label>
+                  <RadioGroup.Root
+                    className="flex flex-col gap-4"
+                    defaultValue="default"
+                    aria-label="View density"
+                  >
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <RadioGroup.Item
+                        className="bg-white w-6 h-6 rounded-full shadow-md"
+                        value="default"
+                        id="r1"
+                      >
+                        <RadioGroup.Indicator className="flex items-center justify-center relative  after:block after:w-3 after:h-3 after:rounded-3xl after:bg-violet-800" />
+                      </RadioGroup.Item>
+                      <label className="text-sm pl-4" htmlFor="r1">
+                        CARTÃO DE CRÉDITO
+                      </label>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <RadioGroup.Item
+                        className="bg-white w-6 h-6 rounded-full shadow-md"
+                        value="comfortable"
+                        id="r2"
+                      >
+                        <RadioGroup.Indicator className="flex items-center justify-center relative  after:block after:w-3 after:h-3 after:rounded-3xl after:bg-violet-800" />
+                      </RadioGroup.Item>
+                      <label className="text-sm pl-4" htmlFor="r2">
+                        CARTÃO DE DÉBITO
+                      </label>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <RadioGroup.Item
+                        className="bg-white w-6 h-6 rounded-full shadow-md"
+                        value="compact"
+                        id="r3"
+                      >
+                        <RadioGroup.Indicator className="flex items-center justify-center relative  after:block after:w-3 after:h-3 after:rounded-3xl after:bg-violet-800" />
+                      </RadioGroup.Item>
+                      <label className="text-sm pl-4" htmlFor="r3">
+                        DINHEIRO
+                      </label>
+                    </div>
+                  </RadioGroup.Root>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="mt-16 lg:mt-0 lg:ml-6">
+          <div className="mt-16 flex flex-col items-center lg:mt-0 lg:ml-6 lg:w-1/3">
             <p className="font-bold text-lg">Produtos selecionados</p>
-            <div className="bg-slate-300 p-4 rounded-tr-md rounded-bl-md lg:w-1/2">
+            <div className="bg-slate-300 p-4 rounded-tr-md rounded-bl-md lg:w-full">
               <div className="flex flex-col gap-2 mb-4">
                 {pedido.produtos.map((produto) => {
                   return <ProductCard key={produto.id} produto={produto} />;
@@ -160,6 +179,12 @@ export default function IntroductionSection() {
               <h3 className="text-sm">Total dos itens - R$ 65,80</h3>
               <p className="text-sm py-2">Entrega - R$ 10,99</p>
               <p className="font-bold text-lg">Total - 76,79</p>
+              <button
+                className="px-32 text-white bg-green-600 py-2 rounded hover:scale-95 
+        hover:opacity-80 duration-300"
+              >
+                Confirmar pedido
+              </button>
             </div>
           </div>
         </form>
