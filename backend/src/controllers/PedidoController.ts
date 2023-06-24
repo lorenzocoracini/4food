@@ -3,9 +3,14 @@ import { pedidoRepository } from "../repositories/pedidoRepository";
 import { productRepository } from "../repositories/productRepository";
 import { comboRepository } from "../repositories/comboRepository";
 import { userRepository } from "../repositories/userRepository";
+import { Produto } from "../entities/Produto";
+import { Combo } from "../entities/Combo";
+
 export class PedidoController {
   async create(req: Request, res: Response) {
-    const { client_id } = req.params;
+    const { client_id, rua, numero, complemento } = req.params;
+    const { products, combos } = req.body;
+
     if (!client_id) {
       return res.status(400).json({ message: "Client Id is required" });
     }
@@ -16,9 +21,21 @@ export class PedidoController {
       if (!user) {
         return res.status(404).json({ message: "Client does not exist" });
       }
-      const newPedido = pedidoRepository.create();
+      const newPedido = pedidoRepository.create({ rua, numero, complemento });
       newPedido.client = user;
       await pedidoRepository.save(newPedido);
+
+      console.log(products);
+      combos.forEach(async (combo: Combo) => {
+        await PedidoController.addCombo(newPedido.id, combo.id);
+      });
+      products.forEach(async (product: Produto) => {
+        await PedidoController.addProduct(
+          newPedido.id,
+          product.id,
+          product.quantity
+        );
+      });
 
       const { password, ...userWithoutPassword } = user;
       return res
@@ -29,9 +46,11 @@ export class PedidoController {
       return res.status(500).json({ message: "Internal Server Error" });
     }
   }
-  async addProduct(req: Request, res: Response) {
-    const { pedido_id, product_id } = req.params;
-
+  static async addProduct(
+    pedido_id: number,
+    product_id: number,
+    quantity: number
+  ) {
     try {
       const pedido = await pedidoRepository
         .createQueryBuilder("pedido")
@@ -39,59 +58,28 @@ export class PedidoController {
         .where("pedido.id = :id", { id: pedido_id })
         .getOne();
       if (!pedido) {
-        return res.status(404).json({ message: "Pedido does not exist" });
+        return { message: "Pedido does not exist" };
       }
 
       const product = await productRepository.findOneBy({
-        id: Number(product_id),
+        id: product_id,
       });
       if (!product) {
-        return res.status(404).json({ message: "Product does not exist" });
+        return { message: "Product does not exist" };
       }
+      product.quantity = quantity;
+      await productRepository.save(product);
 
       pedido.produtos.push(product);
       await pedidoRepository.save(pedido);
-      return res.status(201).json(pedido.produtos);
+      return;
     } catch (erro) {
       console.log(erro);
-      return res.status(500).json({ message: "Internal Server Error" });
+      return { message: "Internal Server Error" };
     }
   }
 
-  async removeProduct(req: Request, res: Response) {
-    const { pedido_id, product_id } = req.params;
-
-    try {
-      const pedido = await pedidoRepository
-        .createQueryBuilder("pedido")
-        .leftJoinAndSelect("pedido.produtos", "produtos")
-        .where("pedido.id = :id", { id: pedido_id })
-        .getOne();
-      if (!pedido) {
-        return res.status(404).json({ message: "Pedido does not exist" });
-      }
-
-      const productIndex = pedido.produtos.findIndex(
-        (product) => product.id === Number(product_id)
-      );
-      if (productIndex === -1) {
-        return res
-          .status(404)
-          .json({ message: "Product does not exist in the order" });
-      }
-
-      pedido.produtos.splice(productIndex, 1);
-      await pedidoRepository.save(pedido);
-      return res.status(200).json(pedido.produtos);
-    } catch (error) {
-      console.log(error);
-      return res.status(500).json({ message: "Internal Server Error" });
-    }
-  }
-
-  async addCombo(req: Request, res: Response) {
-    const { pedido_id, combo_id } = req.params;
-
+  static async addCombo(pedido_id: number, combo_id: number) {
     try {
       const pedido = await pedidoRepository
         .createQueryBuilder("pedido")
@@ -99,53 +87,22 @@ export class PedidoController {
         .where("pedido.id = :id", { id: pedido_id })
         .getOne();
       if (!pedido) {
-        return res.status(404).json({ message: "Pedido does not exist" });
+        return { message: "Pedido does not exist" };
       }
 
       const combo = await comboRepository.findOneBy({
         id: Number(combo_id),
       });
       if (!combo) {
-        return res.status(404).json({ message: "Combo does not exist" });
+        return { message: "Combo does not exist" };
       }
 
       pedido.combos.push(combo);
       await pedidoRepository.save(pedido);
-      return res.status(201).json(pedido.combos);
+      return;
     } catch (erro) {
       console.log(erro);
-      return res.status(500).json({ message: "Internal Server Error" });
-    }
-  }
-
-  async removeCombo(req: Request, res: Response) {
-    const { pedido_id, combo_id } = req.params;
-
-    try {
-      const pedido = await pedidoRepository
-        .createQueryBuilder("pedido")
-        .leftJoinAndSelect("pedido.combos", "combos")
-        .where("pedido.id = :id", { id: pedido_id })
-        .getOne();
-      if (!pedido) {
-        return res.status(404).json({ message: "Pedido does not exist" });
-      }
-
-      const comboIndex = pedido.combos.findIndex(
-        (combo) => combo.id === Number(combo_id)
-      );
-      if (comboIndex === -1) {
-        return res
-          .status(404)
-          .json({ message: "Combo does not exist in the order" });
-      }
-
-      pedido.combos.splice(comboIndex, 1);
-      await pedidoRepository.save(pedido);
-      return res.status(200).json(pedido.combos);
-    } catch (error) {
-      console.log(error);
-      return res.status(500).json({ message: "Internal Server Error" });
+      return { message: "Internal Server Error" };
     }
   }
 }
