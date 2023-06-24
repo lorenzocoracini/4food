@@ -1,11 +1,15 @@
 "use client";
-import Image from "next/image";
-import Link from "next/link";
-import logo from "@images/logo-4food.png";
+import { useState } from "react";
+import * as Popover from "@radix-ui/react-popover";
 import { AiOutlineShoppingCart, AiOutlineMenu } from "react-icons/ai";
 import { GrClose } from "react-icons/gr";
-import { useState } from "react";
+
+import Image from "next/image";
+import Link from "next/link";
+
+import logo from "@images/logo-4food.png";
 import { Button } from "./Button";
+import PopOver from "./PopOver";
 
 export function Header() {
   const [menuTab, setMenuTab] = useState(false);
@@ -54,11 +58,7 @@ export function Header() {
       </ul>
 
       <div className="flex justify-center items-center gap-11">
-        <Link href="/finalizar_pedido" className="block px-3 py-4">
-          <button className="text-3xl hover:opacity-60 hover:scale-95 duration-300">
-            <AiOutlineShoppingCart />
-          </button>
-        </Link>
+        <PopOver />
 
         <button
           className="text-2xl lg:hidden"
