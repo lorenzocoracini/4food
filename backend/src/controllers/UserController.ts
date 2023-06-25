@@ -57,6 +57,7 @@ export class UserController {
     }
   }
   async delete(req: Request, res: Response) {
+    
     const userId = req.params;
 
     try {
