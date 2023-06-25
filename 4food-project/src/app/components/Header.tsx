@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import * as Popover from "@radix-ui/react-popover";
 import { AiOutlineShoppingCart, AiOutlineMenu } from "react-icons/ai";
 import { GrClose } from "react-icons/gr";
 
@@ -9,10 +8,17 @@ import Link from "next/link";
 
 import logo from "@images/logo-4food.png";
 import { Button } from "./Button";
-import PopOver from "./PopOver";
+import { Dropdown } from "./DropDown";
 
 export function Header() {
   const [menuTab, setMenuTab] = useState(false);
+
+  const userLogado = true
+
+  const dropDownLinks = [
+    {label: 'Meus Dados', url: '/perfil'},
+    {label: 'Sair da conta', url: '/'},
+  ]
 
   const links = [
     {
@@ -38,12 +44,12 @@ export function Header() {
         <Image
           src={logo}
           alt="Logo 4Food"
-          className="w-2/5 lg:w-48 hover:scale-95 
+          className="w-20 lg:w-48 hover:scale-95 
         hover:opacity-60 duration-300"
         />
       </div>
 
-      <ul className="p-4 hidden gap-20 lg:flex justify-center pl-28">
+      <ul className="p-4 hidden gap-14 lg:flex justify-center pl-28">
         {links.map((link) => (
           <li key={link.id}>
             <Link
@@ -57,12 +63,18 @@ export function Header() {
         ))}
       </ul>
 
-      <div className="flex justify-center items-center gap-11">
-        <Link href="/finalizar_pedido" className="block px-3 py-4">
-          <button className="text-3xl hover:opacity-60 hover:scale-95 duration-300">
+      <div className="flex justify-center items-center gap-5">
+        <Link href="/finalizar_pedido" className="block py-4">
+          <button className="text-2xl hover:opacity-60 hover:scale-95 duration-300">
             <AiOutlineShoppingCart />
           </button>
         </Link>
+
+        {userLogado && (
+          <div className="lg:hidden">
+            <Dropdown buttonLabel="Meu perfil" links={dropDownLinks} size={20}/>
+          </div>
+        )}
 
         <button
           className="text-2xl lg:hidden"
@@ -71,13 +83,18 @@ export function Header() {
           {menuTab ? <GrClose /> : <AiOutlineMenu />}
         </button>
 
+        {userLogado ? (
+          <div className="lg:block hidden px-3 py-4">
+            <Dropdown buttonLabel="Perfil" links={dropDownLinks} size={32}/>
+          </div>
+        ) : (
         <Link href="/login" className=" hidden lg:block">
           <Button onClick={undefined} style={undefined}>
             Entrar
           </Button>
         </Link>
+        )}
       </div>
-
       {menuTab && (
         <ul
           className="lg:hidden flex flex-col justify-center items-start absolute z-50 bg-white p-4 top-24 left-0 w-full
@@ -94,7 +111,7 @@ export function Header() {
               </Link>
             </li>
           ))}
-
+          {!userLogado && (
           <li>
             <Link href="/login" className="block px-3 py-4">
               <Button onClick={undefined} style={undefined}>
@@ -102,6 +119,7 @@ export function Header() {
               </Button>
             </Link>
           </li>
+          )}
         </ul>
       )}
     </div>
