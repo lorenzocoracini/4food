@@ -2,10 +2,25 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useForm, Controller } from "react-hook-form";
 import * as RadioGroup from "@radix-ui/react-radio-group";
-import { useForm } from "react-hook-form";
+
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import { ProductCard } from "../components/ProductCard";
+
+import { LuAlertOctagon } from "react-icons/lu";
+
+const schemaPedido = Yup.object().shape({
+  rua: Yup.string().required("Informe sua Rua"),
+  bairro: Yup.string().required("Informe seu Bairro"),
+  numero: Yup.number()
+    .transform((value) => (Number.isNaN(value) ? null : value))
+    .nullable()
+    .required("Informe seu Número"),
+  metodo_pagamento: Yup.string().required("Selecione o método de pagamento"),
+});
 
 export default function IntroductionSection() {
   const [pedido, setPedido] = useState({
@@ -16,11 +31,23 @@ export default function IntroductionSection() {
         preco: `R$ ${12.0}`,
         id: "1",
       },
+      {
+        nome: "sushi",
+        quantidade: 4,
+        preco: `R$ ${12.0}`,
+        id: "9",
+      },
     ],
     combos: [
       {
         nome: "Combo Promoção de Inverno Sushi + Temaki",
         id: "2",
+        preco: `R$ ${69.99}`,
+        quantidade: 2,
+      },
+      {
+        nome: "Combo Temaki",
+        id: "4",
         preco: `R$ ${69.99}`,
         quantidade: 2,
       },
@@ -30,16 +57,35 @@ export default function IntroductionSection() {
   const {
     register,
     handleSubmit,
+    setValue,
     watch,
-    formState: { errors },
-  } = useForm();
+    control,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    mode: "all",
+    resolver: yupResolver(schemaPedido),
+    defaultValues: {
+      bairro: "",
+      metodo_pagamento: "",
+      rua: "",
+    },
+  });
+  function checkCEP(e: any) {
+    const cep = e.target.value.replace(/\D/g, "");
+    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+      .then((res) => res.json())
+      .then((data) => {
+        setValue("rua", data.logradouro);
+        setValue("bairro", data.bairro);
+      });
+  }
 
-  function onSubmit() {
-    console.log("Vamos pedir um sushizin?");
+  function handleSubmitData(data: any) {
+    console.log("Vamos pedir um sushizin?", data);
   }
 
   return (
-    <main className="w-full px-4 flex items-center justify-center">
+    <main className="w-full flex items-center py-8 justify-center">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -47,8 +93,8 @@ export default function IntroductionSection() {
         transition={{ duration: 0.5 }}
       >
         <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col lg:flex-row lg:justify-center"
+          onSubmit={handleSubmit(handleSubmitData)}
+          className="flex flex-col items-center justify-center w-full lg:flex-row lg:justify-center px-2"
         >
           <div>
             <p className="font-bold text-lg">Complete seu pedido</p>
@@ -59,109 +105,125 @@ export default function IntroductionSection() {
               </p>
               <div className="flex flex-col gap-2">
                 <input
-                  className="rounded p-2 w-full"
+                  className="rounded p-2 w-full mb-2"
                   type="text"
-                  name="cep"
-                  id="cep"
+                  onBlur={checkCEP}
                   placeholder="CEP"
                 />
                 <input
                   className="rounded p-2  w-full"
                   type="text"
-                  name="rua"
-                  id="rua"
                   placeholder="Rua"
+                  {...register("rua")}
                 />
+                {errors.rua ? (
+                  <p className="bg-red-600 text-white p-2 rounded flex gap-2 items-center mb-2">
+                    <LuAlertOctagon size={20} />
+                    {errors.rua?.message}
+                  </p>
+                ) : null}
                 <input
                   className="rounded p-2  w-full"
-                  type="text"
-                  name="numero"
-                  id="numero"
                   placeholder="Número"
+                  {...register("numero")}
                 />
+                {errors.numero ? (
+                  <p className="bg-red-600 text-white p-2 rounded flex gap-2 items-center mb-2">
+                    <LuAlertOctagon size={20} />
+                    {errors.numero?.message}
+                  </p>
+                ) : null}
                 <input
-                  className="rounded p-2 w-full"
+                  className="rounded p-2 w-full mb-2"
                   type="text"
                   name="complemento"
-                  id="complemento"
                   placeholder="Complemento"
                 />
                 <input
                   className="rounded p-2 w-full"
                   type="text"
-                  name="bairro"
-                  id="bairro"
                   placeholder="Bairro"
+                  {...register("bairro")}
                 />
-                <input
-                  className="rounded p-2 w-full"
-                  type="text"
-                  name="cidade"
-                  id="cidade"
-                  placeholder="Cidade"
-                />
+                {errors.bairro ? (
+                  <p className="bg-red-600 text-white p-2 rounded flex items-center gap-2 mb-2">
+                    <LuAlertOctagon size={20} />
+                    {errors.bairro?.message}
+                  </p>
+                ) : null}
               </div>
             </div>
 
             <div className="mt-6">
-              <div className="bg-slate-300 p-4 rounded-tr-md rounded-bl-md">
+              <div className="bg-slate-300 p-4 rounded-tr-md rounded">
                 <h3 className="text-lg">$ Pagamento</h3>
                 <p className="text-sm py-2">
                   O pagamento é feito na entrega. Escolha a forma que deseja
                   pagar.
                 </p>
                 <div className="flex flex-col gap-2">
-                  <RadioGroup.Root
-                    className="flex flex-col gap-4"
-                    defaultValue="default"
-                    aria-label="View density"
-                  >
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <RadioGroup.Item
-                        className="bg-white w-6 h-6 rounded-full shadow-md"
-                        value="default"
-                        id="r1"
+                  <Controller
+                    control={control}
+                    name="metodo_pagamento"
+                    render={({ field: { onChange, value, ref } }) => (
+                      <RadioGroup.Root
+                        onValueChange={onChange}
+                        value={value}
+                        className="flex flex-col gap-4"
+                        defaultValue="default"
+                        aria-label="View density"
                       >
-                        <RadioGroup.Indicator className="flex items-center justify-center relative  after:block after:w-3 after:h-3 after:rounded-3xl after:bg-violet-800" />
-                      </RadioGroup.Item>
-                      <label className="text-sm pl-4" htmlFor="r1">
-                        CARTÃO DE CRÉDITO
-                      </label>
-                    </div>
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <RadioGroup.Item
-                        className="bg-white w-6 h-6 rounded-full shadow-md"
-                        value="comfortable"
-                        id="r2"
-                      >
-                        <RadioGroup.Indicator className="flex items-center justify-center relative  after:block after:w-3 after:h-3 after:rounded-3xl after:bg-violet-800" />
-                      </RadioGroup.Item>
-                      <label className="text-sm pl-4" htmlFor="r2">
-                        CARTÃO DE DÉBITO
-                      </label>
-                    </div>
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <RadioGroup.Item
-                        className="bg-white w-6 h-6 rounded-full shadow-md"
-                        value="compact"
-                        id="r3"
-                      >
-                        <RadioGroup.Indicator className="flex items-center justify-center relative  after:block after:w-3 after:h-3 after:rounded-3xl after:bg-violet-800" />
-                      </RadioGroup.Item>
-                      <label className="text-sm pl-4" htmlFor="r3">
-                        DINHEIRO
-                      </label>
-                    </div>
-                  </RadioGroup.Root>
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <RadioGroup.Item
+                            className="bg-white w-6 h-6 rounded-full shadow-md"
+                            value="credito"
+                          >
+                            <RadioGroup.Indicator className="flex items-center justify-center relative  after:block after:w-3 after:h-3 after:rounded-3xl after:bg-violet-800" />
+                          </RadioGroup.Item>
+                          <label className="text-sm pl-4" htmlFor="r1">
+                            CARTÃO DE CRÉDITO
+                          </label>
+                        </div>
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <RadioGroup.Item
+                            className="bg-white w-6 h-6 rounded-full shadow-md"
+                            value="debito"
+                          >
+                            <RadioGroup.Indicator className="flex items-center justify-center relative  after:block after:w-3 after:h-3 after:rounded-3xl after:bg-violet-800" />
+                          </RadioGroup.Item>
+                          <label className="text-sm pl-4" htmlFor="r2">
+                            CARTÃO DE DÉBITO
+                          </label>
+                        </div>
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <RadioGroup.Item
+                            className="bg-white w-6 h-6 rounded-full shadow-md"
+                            value="dinheiro"
+                          >
+                            <RadioGroup.Indicator className="flex items-center justify-center relative  after:block after:w-3 after:h-3 after:rounded-3xl after:bg-violet-800" />
+                          </RadioGroup.Item>
+                          <label className="text-sm pl-4" htmlFor="r3">
+                            DINHEIRO
+                          </label>
+                        </div>
+                      </RadioGroup.Root>
+                    )}
+                  />
                 </div>
               </div>
+              {errors.metodo_pagamento ? (
+                <p className="bg-red-600 text-white p-2 rounded-b-md flex gap-2 items-center mb-2">
+                  <LuAlertOctagon size={20} />
+                  {errors.metodo_pagamento?.message}
+                </p>
+              ) : null}
             </div>
           </div>
 
-          <div className="mt-16 flex flex-col items-center lg:mt-0 lg:ml-6 lg:w-1/3">
+          <div className="w-full mt-16 flex flex-col px-2 lg:mt-0 lg:ml-6 lg:w-1/3">
             <p className="font-bold text-lg">Produtos selecionados</p>
-            <div className="bg-slate-300 p-4 rounded-tr-md rounded-bl-md lg:w-full">
-              <div className="flex flex-col gap-2 mb-4">
+            <div className="bg-black text-white rounded-tr-md rounded-bl-md lg:w-full">
+              <div className="flex flex-col items-center justify-center gap-2 mb-4">
                 {pedido.produtos.map((produto) => {
                   return <ProductCard key={produto.id} produto={produto} />;
                 })}
@@ -175,16 +237,23 @@ export default function IntroductionSection() {
                   );
                 })}
               </div>
-
-              <h3 className="text-sm">Total dos itens - R$ 65,80</h3>
-              <p className="text-sm py-2">Entrega - R$ 10,99</p>
-              <p className="font-bold text-lg">Total - 76,79</p>
-              <button
-                className="px-32 text-white bg-green-600 py-2 rounded hover:scale-95 
+              <hr className="border-gray-300" />
+              <div className="w-full p-4">
+                <div className="text-end">
+                  <h3 className="text-sm">Total dos itens - R$ 65,80</h3>
+                  <p className="text-sm py-2">Entrega - R$ 10,99</p>
+                  <p className="font-bold text-lg">Total - 76,79</p>
+                </div>
+                <div className="flex justify-center items-center px-2">
+                  <button
+                    type="submit"
+                    className="px-16 md:px-28 mt-2 text-black bg-white font-bold py-2 rounded hover:scale-95 
         hover:opacity-80 duration-300"
-              >
-                Confirmar pedido
-              </button>
+                  >
+                    Confirmar pedido
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </form>
