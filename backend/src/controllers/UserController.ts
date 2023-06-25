@@ -36,7 +36,7 @@ export class UserController {
     try {
       const user = await userRepository.findOne(userId);
       if (!user) {
-        throw new BadRequestError("User not found");
+        throw new BadRequestError("User not foundd");
       }
 
       user.name = name || user.name;
@@ -57,7 +57,7 @@ export class UserController {
     }
   }
   async delete(req: Request, res: Response) {
-    
+
     const userId = req.params;
 
     try {
