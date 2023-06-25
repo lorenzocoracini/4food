@@ -36,7 +36,7 @@ export class UserController {
     try {
       const user = await userRepository.findOne(userId);
       if (!user) {
-        throw new BadRequestError("User not foundd");
+        throw new BadRequestError("User nott foundd");
       }
 
       user.name = name || user.name;
