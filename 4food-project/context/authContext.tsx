@@ -1,16 +1,20 @@
 "use client";
 
+import axios, { AxiosError } from "axios";
 import { ReactNode, createContext, useState } from "react";
+import { api } from "src/services/api";
+
 
 interface User {
   name: string;
   email: string;
   phone: string;
+  id: string;
 }
 
 interface authContextType {
   user: User;
-  signIn: (data: any) => void;
+  signIn: (data: any) => typeof data;
   signUp: (data: any) => void;
   setUser: (data: any) => void;
   userIsLogged: () => void;
@@ -24,6 +28,10 @@ export const AuthContext = createContext({} as authContextType);
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [user, setUser] = useState<User>({} as User);
+
+  async function userTokenUpdate(token: string) {
+    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  }
 
   function signUp(data: any) {
     try {
@@ -51,27 +59,22 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     }
   }
 
-  function signIn(data: any) {
+  async function signIn(data: any) {
     try {
-      fetch("https://back4food-92b6dhpjn-lorenzocoracini.vercel.app/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-        .then((data) => {
-          return data.json();
-        })
-        .then((data) => {
-          alert("Você entrou com sucesso");
+      const res = await axios.post("https://back4food-92b6dhpjn-lorenzocoracini.vercel.app/login", JSON.stringify(data), {headers: {
+        "Content-Type": "application/json",
+      }})
 
-          setUser(data.user);
-          localStorage.setItem("jwtToken", data.token);
-          localStorage.setItem("userProfile", JSON.stringify(data.user));
-        });
-    } catch (error) {
-      console.log(error);
+      userTokenUpdate(res.data.token);
+
+      return res
+    } catch (error: any) {
+      if(error.response.status == 400){
+        throw Error ("Email ou senha inválidos.")
+      } else {
+
+        throw Error('Não foi possível entrar no momento.')
+      }
     }
   }
 
@@ -79,9 +82,10 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     checkTokenValidity();
   }
 
+ 
+
   const checkTokenValidity = () => {
     const token = localStorage.getItem("jwtToken");
-    console.log(token);
 
     if (token) {
       fetch("https://back4food-92b6dhpjn-lorenzocoracini.vercel.app/profile", {
@@ -94,6 +98,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         })
         .then((data) => setUser(data))
         .catch((error) => {
+          
           localStorage.removeItem("jwtToken");
         });
     } else {

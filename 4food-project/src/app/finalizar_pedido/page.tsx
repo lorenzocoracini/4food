@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useForm, Controller } from "react-hook-form";
 import * as RadioGroup from "@radix-ui/react-radio-group";
@@ -12,6 +11,7 @@ import { ProductCard } from "../components/ProductCard";
 
 import { LuAlertOctagon } from "react-icons/lu";
 import { useCart } from "hooks/useCart";
+import { useRouter } from "next/navigation";
 
 const schemaPedido = Yup.object().shape({
   rua: Yup.string().required("Informe sua Rua"),
@@ -25,38 +25,8 @@ const schemaPedido = Yup.object().shape({
 
 export default function IntroductionSection() {
   const { cartItems } = useCart();
-  console.log(cartItems)
 
-  const [pedido, setPedido] = useState({
-    produtos: [
-      {
-        nome: "sushi",
-        quantidade: 4,
-        preco: `R$ ${12.0}`,
-        id: "1",
-      },
-      {
-        nome: "sushi",
-        quantidade: 4,
-        preco: `R$ ${12.0}`,
-        id: "9",
-      },
-    ],
-    combos: [
-      {
-        nome: "Combo Sushi + Temaki",
-        id: "2",
-        preco: `R$ ${69.99}`,
-        quantidade: 2,
-      },
-      {
-        nome: "Combo Temaki",
-        id: "4",
-        preco: `R$ ${69.99}`,
-        quantidade: 2,
-      },
-    ],
-  });
+  const route = useRouter();
 
   const {
     register,
@@ -76,16 +46,22 @@ export default function IntroductionSection() {
   });
   function checkCEP(e: any) {
     const cep = e.target.value.replace(/\D/g, "");
-    fetch(`https://viacep.com.br/ws/${cep}/json/`)
-      .then((res) => res.json())
-      .then((data) => {
-        setValue("rua", data.logradouro);
-        setValue("bairro", data.bairro);
-      });
+  
+  if (cep.length === 0) {
+    return;
+  }
+
+  fetch(`https://viacep.com.br/ws/${cep}/json/`)
+    .then((res) => res.json())
+    .then((data) => {
+      setValue("rua", data.logradouro);
+      setValue("bairro", data.bairro);
+    });
   }
 
   function handleSubmitData(data: any) {
     console.log("Vamos pedir um sushizin?", data);
+    route.push('/pedido-confirmado')
   }
 
   return (

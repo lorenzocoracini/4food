@@ -71,6 +71,8 @@ export function Header() {
       </ul>
 
       <div className="flex justify-center items-center gap-5">
+          {user?.name && (<p>Olá, {user.name}</p>)}
+
         <Link href="/finalizar_pedido" className="block py-4">
           <button className="text-2xl hover:opacity-60 hover:scale-95 duration-300">
             <AiOutlineShoppingCart />
@@ -105,6 +107,7 @@ export function Header() {
             </Button>
           </Link>
         )}
+
       </div>
       {menuTab && (
         <ul
