@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useForm, Controller } from "react-hook-form";
 import * as RadioGroup from "@radix-ui/react-radio-group";
@@ -11,6 +11,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { ProductCard } from "../components/ProductCard";
 
 import { LuAlertOctagon } from "react-icons/lu";
+import { useCart } from "hooks/useCart";
 
 const schemaPedido = Yup.object().shape({
   rua: Yup.string().required("Informe sua Rua"),
@@ -23,6 +24,9 @@ const schemaPedido = Yup.object().shape({
 });
 
 export default function IntroductionSection() {
+  const { cartItems } = useCart();
+  console.log(cartItems)
+
   const [pedido, setPedido] = useState({
     produtos: [
       {
@@ -40,7 +44,7 @@ export default function IntroductionSection() {
     ],
     combos: [
       {
-        nome: "Combo Promoção de Inverno Sushi + Temaki",
+        nome: "Combo Sushi + Temaki",
         id: "2",
         preco: `R$ ${69.99}`,
         quantidade: 2,
@@ -94,11 +98,11 @@ export default function IntroductionSection() {
       >
         <form
           onSubmit={handleSubmit(handleSubmitData)}
-          className="flex flex-col items-center justify-center w-full lg:flex-row lg:justify-center px-2"
+          className="flex flex-col items-center lg:items-start justify-center w-full lg:flex-row lg:justify-center px-2"
         >
           <div>
             <p className="font-bold text-lg">Complete seu pedido</p>
-            <div className="bg-slate-300 p-4 rounded-tr-md rounded-bl-md">
+            <div className="bg-gray-200 p-4 rounded-tr-md rounded-bl-md">
               <h3 className="text-lg">Endereço de entrega</h3>
               <p className="text-sm py-2">
                 Informe o endereço onde deseja receber seu pedido
@@ -111,28 +115,28 @@ export default function IntroductionSection() {
                   placeholder="CEP"
                 />
                 <input
-                  className="rounded p-2  w-full"
+                  className="rounded p-2 mb-2 w-full"
                   type="text"
                   placeholder="Rua"
                   {...register("rua")}
                 />
-                {errors.rua ? (
+                {errors.rua && (
                   <p className="bg-red-600 text-white p-2 rounded flex gap-2 items-center mb-2">
                     <LuAlertOctagon size={20} />
                     {errors.rua?.message}
                   </p>
-                ) : null}
+                )}
                 <input
-                  className="rounded p-2  w-full"
+                  className="rounded p-2 mb-2 w-full"
                   placeholder="Número"
                   {...register("numero")}
                 />
-                {errors.numero ? (
+                {errors.numero && (
                   <p className="bg-red-600 text-white p-2 rounded flex gap-2 items-center mb-2">
                     <LuAlertOctagon size={20} />
                     {errors.numero?.message}
                   </p>
-                ) : null}
+                )}
                 <input
                   className="rounded p-2 w-full mb-2"
                   type="text"
@@ -140,22 +144,22 @@ export default function IntroductionSection() {
                   placeholder="Complemento"
                 />
                 <input
-                  className="rounded p-2 w-full"
+                  className="rounded p-2 w-full mb-2"
                   type="text"
                   placeholder="Bairro"
                   {...register("bairro")}
                 />
-                {errors.bairro ? (
+                {errors.bairro && (
                   <p className="bg-red-600 text-white p-2 rounded flex items-center gap-2 mb-2">
                     <LuAlertOctagon size={20} />
                     {errors.bairro?.message}
                   </p>
-                ) : null}
+                )}
               </div>
             </div>
 
             <div className="mt-6">
-              <div className="bg-slate-300 p-4 rounded-tr-md rounded">
+              <div className="bg-gray-200 p-4 rounded-tr-md rounded">
                 <h3 className="text-lg">$ Pagamento</h3>
                 <p className="text-sm py-2">
                   O pagamento é feito na entrega. Escolha a forma que deseja
@@ -220,21 +224,12 @@ export default function IntroductionSection() {
             </div>
           </div>
 
-          <div className="w-full mt-16 flex flex-col px-2 lg:mt-0 lg:ml-6 lg:w-1/3">
+          <div className="w-full mt-16 flex flex-col px-2 lg:mt-0 lg:ml-6 lg:w-1/2">
             <p className="font-bold text-lg">Produtos selecionados</p>
-            <div className="bg-black text-white rounded-tr-md rounded-bl-md lg:w-full">
+            <div className="bg-gray-200 lg:p-3 text-black rounded-tr-md rounded-bl-md lg:w-full">
               <div className="flex flex-col items-center justify-center gap-2 mb-4">
-                {pedido.produtos.map((produto) => {
+                {cartItems.map((produto) => {
                   return <ProductCard key={produto.id} produto={produto} />;
-                })}
-                {pedido.combos.map((combo) => {
-                  return (
-                    <ProductCard
-                      key={combo.id}
-                      produto={combo}
-                      isCombo={true}
-                    />
-                  );
                 })}
               </div>
               <hr className="border-gray-300" />
@@ -242,12 +237,12 @@ export default function IntroductionSection() {
                 <div className="text-end">
                   <h3 className="text-sm">Total dos itens - R$ 65,80</h3>
                   <p className="text-sm py-2">Entrega - R$ 10,99</p>
-                  <p className="font-bold text-lg">Total - 76,79</p>
+                  <p className="font-bold text-lg">Total - R$ 76,79</p>
                 </div>
                 <div className="flex justify-center items-center px-2">
                   <button
                     type="submit"
-                    className="px-16 md:px-28 mt-2 text-black bg-white font-bold py-2 rounded hover:scale-95 
+                    className="px-16 md:px-28 mt-2 text-white bg-black font-bold py-2 rounded hover:scale-95 
         hover:opacity-80 duration-300"
                   >
                     Confirmar pedido
