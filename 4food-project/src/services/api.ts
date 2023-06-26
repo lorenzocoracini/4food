@@ -1,10 +1,7 @@
-import axios, { AxiosInstance } from 'axios';
-
+import axios, { AxiosInstance } from "axios";
 
 const api = axios.create({
-    baseURL: 'https://back4food-92b6dhpjn-lorenzocoracini.vercel.app'
-}) as AxiosInstance
+  baseURL: "https://back4food-1ifogmmqz-lorenzocoracini.vercel.app",
+}) as AxiosInstance;
 
-
-
-export { api }
+export { api };

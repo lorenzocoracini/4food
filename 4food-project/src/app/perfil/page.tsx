@@ -18,9 +18,9 @@ export default function Perfil() {
   const foneInputRef = useRef<HTMLInputElement>(null);
   const senhaInputRef = useRef<HTMLInputElement>(null);
 
-  async function handleEditProfile(event: any){
-    event.preventDefault()
-    
+  async function handleEditProfile(event: any) {
+    event.preventDefault();
+
     const name = nameInputRef.current?.value;
     const email = emailInputRef.current?.value;
     const phone = foneInputRef.current?.value;
@@ -30,11 +30,14 @@ export default function Perfil() {
       name,
       email,
       phone,
-      password
-    }
-    console.log(JSON.stringify(updateUserObject));
-    
-    const res = await api.post(`/user/${user.id}`, JSON.stringify(updateUserObject))
+      password,
+    };
+    const token = localStorage.getItem("jwtToken");
+    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    const res = await api.put(
+      `/user/${user.id}`,
+      JSON.stringify(updateUserObject)
+    );
     console.log(res);
   }
 
@@ -109,7 +112,6 @@ export default function Perfil() {
               type="tel"
               ref={foneInputRef}
               defaultValue={user?.phone}
-
               className="border border-black border-solid py-3 px-2 w-4/5 md:w-60 lg:w-80"
             />
           </div>
