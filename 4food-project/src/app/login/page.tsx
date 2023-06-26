@@ -3,8 +3,11 @@ import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LuAlertOctagon } from "react-icons/lu";
+import { useAuth } from "hooks/useAuth";
 
 export default function Login() {
+  const { signIn } = useAuth();
+
   const schema = Yup.object().shape({
     email: Yup.string()
       .required("Campo obrigatório!")
@@ -20,7 +23,7 @@ export default function Login() {
   const { errors, isSubmitting } = formState;
 
   const handleSubmitLogin = (data: any) => {
-    console.log("submit", data);
+    signIn(data);
   };
 
   return (

@@ -9,16 +9,23 @@ import Link from "next/link";
 import logo from "@images/logo-4food.png";
 import { Button } from "./Button";
 import { Dropdown } from "./DropDown";
+import { useAuth } from "hooks/useAuth";
+
+interface User {
+  name: string;
+  email: string;
+}
 
 export function Header() {
   const [menuTab, setMenuTab] = useState(false);
 
-  const userLogado = true
+  const { user } = useAuth();
+
 
   const dropDownLinks = [
-    {label: 'Meus Dados', url: '/perfil'},
-    {label: 'Sair da conta', url: '/'},
-  ]
+    { label: "Meus Dados", url: "/perfil" },
+    { label: "Sair da conta", url: "/" },
+  ];
 
   const links = [
     {
@@ -70,9 +77,13 @@ export function Header() {
           </button>
         </Link>
 
-        {userLogado && (
+        {user?.name && (
           <div className="lg:hidden">
-            <Dropdown buttonLabel="Meu perfil" links={dropDownLinks} size={20}/>
+            <Dropdown
+              buttonLabel="Meu perfil"
+              links={dropDownLinks}
+              size={20}
+            />
           </div>
         )}
 
@@ -83,16 +94,16 @@ export function Header() {
           {menuTab ? <GrClose /> : <AiOutlineMenu />}
         </button>
 
-        {userLogado ? (
+        {user?.name ? (
           <div className="lg:block hidden px-3 py-4">
-            <Dropdown buttonLabel="Perfil" links={dropDownLinks} size={32}/>
+            <Dropdown buttonLabel="Perfil" links={dropDownLinks} size={32} />
           </div>
         ) : (
-        <Link href="/login" className=" hidden lg:block">
-          <Button onClick={undefined} style={undefined}>
-            Entrar
-          </Button>
-        </Link>
+          <Link href="/login" className=" hidden lg:block">
+            <Button onClick={undefined} style={undefined}>
+              Entrar
+            </Button>
+          </Link>
         )}
       </div>
       {menuTab && (
@@ -111,14 +122,14 @@ export function Header() {
               </Link>
             </li>
           ))}
-          {!userLogado && (
-          <li>
-            <Link href="/login" className="block px-3 py-4">
-              <Button onClick={undefined} style={undefined}>
-                Entrar
-              </Button>
-            </Link>
-          </li>
+          {!user && (
+            <li>
+              <Link href="/login" className="block px-3 py-4">
+                <Button onClick={undefined} style={undefined}>
+                  Entrar
+                </Button>
+              </Link>
+            </li>
           )}
         </ul>
       )}
