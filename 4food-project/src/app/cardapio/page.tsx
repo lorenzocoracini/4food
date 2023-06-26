@@ -1,6 +1,7 @@
 "use client";
 import { ItemMenu } from "../components/ItemMenu";
 import exemplo from "@images/sushiexemplo.jpg";
+import { useAuth } from "hooks/useAuth";
 import { useState } from "react";
 
 export default function Cardapio() {
@@ -10,7 +11,19 @@ export default function Cardapio() {
     setActiveItem(item);
   };
 
-  
+  const { user } = useAuth();
+
+  function getProdutosECombos(){
+
+  }
+
+  function createProdutoECombo(){
+
+  }
+
+  function deleteProdutoECombo(){
+    
+  }
 
   const styleButtonActive = "text-black bg-white border border-black";
 

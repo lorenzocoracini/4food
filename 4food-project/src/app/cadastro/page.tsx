@@ -1,6 +1,7 @@
 "use client";
 
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useAuth } from "hooks/useAuth";
 import { useForm } from "react-hook-form";
 import { LuAlertOctagon } from "react-icons/lu";
 
@@ -13,9 +14,9 @@ const schemaPedido = Yup.object().shape({
   password: Yup.string().required("Infome uma Senha"),
 });
 
-
-
 export default function Cadastro() {
+  const { signUp } = useAuth();
+
   const {
     register,
     handleSubmit,
@@ -32,7 +33,9 @@ export default function Cadastro() {
   });
 
   function handleSubmitData(data: any) {
-    getData(data);
+    console.log("entrou no handleSubmitData");
+    console.log(typeof signUp);
+    signUp(data);
   }
 
   return (
