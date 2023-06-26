@@ -4,7 +4,6 @@ import axios, { AxiosError } from "axios";
 import { ReactNode, createContext, useState } from "react";
 import { api } from "src/services/api";
 
-
 interface User {
   name: string;
   email: string;
@@ -30,12 +29,12 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [user, setUser] = useState<User>({} as User);
 
   async function userTokenUpdate(token: string) {
-    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   }
 
   function signUp(data: any) {
     try {
-      fetch("https://back4food-92b6dhpjn-lorenzocoracini.vercel.app/user", {
+      fetch("https://back4food-1ifogmmqz-lorenzocoracini.vercel.app/user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -61,19 +60,24 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
   async function signIn(data: any) {
     try {
-      const res = await axios.post("https://back4food-92b6dhpjn-lorenzocoracini.vercel.app/login", JSON.stringify(data), {headers: {
-        "Content-Type": "application/json",
-      }})
+      const res = await axios.post(
+        "https://back4food-1ifogmmqz-lorenzocoracini.vercel.app/login",
+        JSON.stringify(data),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      userTokenUpdate(res.data.token);
+      await userTokenUpdate(res.data.token);
 
-      return res
+      return res;
     } catch (error: any) {
-      if(error.response.status == 400){
-        throw Error ("Email ou senha inválidos.")
+      if (error.response.status == 400) {
+        throw Error("Email ou senha inválidos.");
       } else {
-
-        throw Error('Não foi possível entrar no momento.')
+        throw Error("Não foi possível entrar no momento.");
       }
     }
   }
@@ -82,13 +86,11 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     checkTokenValidity();
   }
 
- 
-
   const checkTokenValidity = () => {
     const token = localStorage.getItem("jwtToken");
 
     if (token) {
-      fetch("https://back4food-92b6dhpjn-lorenzocoracini.vercel.app/profile", {
+      fetch("https://back4food-1ifogmmqz-lorenzocoracini.vercel.app/profile", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -98,7 +100,6 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         })
         .then((data) => setUser(data))
         .catch((error) => {
-          
           localStorage.removeItem("jwtToken");
         });
     } else {
