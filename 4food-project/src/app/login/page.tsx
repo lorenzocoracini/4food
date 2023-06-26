@@ -1,29 +1,50 @@
-"use client";
+'use client'
+
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { LuAlertOctagon } from "react-icons/lu";
+
+import { useRouter } from "next/navigation";
+
 import { useAuth } from "hooks/useAuth";
 
-export default function Login() {
-  const { signIn } = useAuth();
+import { LuAlertOctagon } from "react-icons/lu";
+const schema = Yup.object().shape({
+  email: Yup.string()
+    .required("Campo obrigatório!")
+    .email("O dado fornecido deve ser um email válido."),
+  password: Yup.string().required("Campo obrigatório!"),
+});
 
-  const schema = Yup.object().shape({
-    email: Yup.string()
-      .required("Campo obrigatório!")
-      .email("O dado fornecido deve ser um email válido."),
-    password: Yup.string().required("Campo obrigatório!"),
-  });
+export default function Login() {
+
+  const router = useRouter()
+
+  const { signIn, setUser } = useAuth();
+
 
   const { register, handleSubmit, formState } = useForm({
     mode: "onSubmit",
     resolver: yupResolver(schema),
   });
-
+  
   const { errors, isSubmitting } = formState;
 
-  const handleSubmitLogin = (data: any) => {
-    signIn(data);
+  const handleSubmitLogin =  async (data: any) => {
+    try {
+      const res = await signIn(data);
+
+      if(res.status == 200){
+        setUser(res.data.user);
+        localStorage.setItem("jwtToken", res.data.token);
+        localStorage.setItem("userProfile", JSON.stringify(res.data.user))
+        router.push('/')
+      }
+      
+    } catch (error: any) {
+      alert(error);
+    }
+      
   };
 
   return (
@@ -84,8 +105,8 @@ export default function Login() {
             )}
           </div>
           <div className="px-3 lg:px-0">
-            <button className=" w-4/5 h-12 lg:w-72 lg:h-12 bg-black text-white mt-4 hover:opacity-80">
-              Entrar
+            <button className=" w-4/5 h-12 lg:w-72 lg:h-12 bg-black text-white mt-4 hover:opacity-80"  >
+               Entrar
             </button>
           </div>
           <p className="text-xs lg:text-sm mt-2">

@@ -1,6 +1,6 @@
 "use client";
 import { useAuth } from "hooks/useAuth";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import {
   BsPersonFill,
@@ -8,9 +8,35 @@ import {
   BsFillLockFill,
 } from "react-icons/bs";
 import { MdEmail } from "react-icons/md";
+import { api } from "src/services/api";
 
 export default function Perfil() {
   const { user, userIsLogged } = useAuth();
+
+  const nameInputRef = useRef<HTMLInputElement>(null);
+  const emailInputRef = useRef<HTMLInputElement>(null);
+  const foneInputRef = useRef<HTMLInputElement>(null);
+  const senhaInputRef = useRef<HTMLInputElement>(null);
+
+  async function handleEditProfile(event: any){
+    event.preventDefault()
+    
+    const name = nameInputRef.current?.value;
+    const email = emailInputRef.current?.value;
+    const phone = foneInputRef.current?.value;
+    const password = senhaInputRef.current?.value;
+
+    const updateUserObject = {
+      name,
+      email,
+      phone,
+      password
+    }
+    console.log(JSON.stringify(updateUserObject));
+    
+    const res = await api.post(`/user/${user.id}`, JSON.stringify(updateUserObject))
+    console.log(res);
+  }
 
   useEffect(() => {
     userIsLogged();
@@ -31,7 +57,7 @@ export default function Perfil() {
             <BsPersonFill className="text-base" />
           </div>
         </div>
-        <form action="">
+        <form onSubmit={handleEditProfile}>
           <div className="pb-4 flex flex-col">
             <div className="flex items-center gap-1">
               <BsPersonFill />
@@ -45,7 +71,8 @@ export default function Perfil() {
             <input
               id="input_nome"
               type="text"
-              value={user?.name}
+              ref={nameInputRef}
+              defaultValue={user?.name}
               className="border border-black border-solid py-3 px-2 w-4/5 md:w-60 lg:w-80"
             />
           </div>
@@ -62,7 +89,8 @@ export default function Perfil() {
             <input
               id="input_email"
               type="text"
-              value={user?.email}
+              ref={emailInputRef}
+              defaultValue={user?.email}
               className="border border-black border-solid py-3 px-2 w-4/5 md:w-60 lg:w-80"
             />
           </div>
@@ -79,7 +107,9 @@ export default function Perfil() {
             <input
               id="input_fone"
               type="tel"
-              value={user?.phone}
+              ref={foneInputRef}
+              defaultValue={user?.phone}
+
               className="border border-black border-solid py-3 px-2 w-4/5 md:w-60 lg:w-80"
             />
           </div>
@@ -96,10 +126,14 @@ export default function Perfil() {
             <input
               id="input_senha"
               type="password"
+              ref={senhaInputRef}
               className="border border-black border-solid py-3 px-2 w-4/5 md:w-60 lg:w-80"
             />
           </div>
-          <button className="w-4/5 md:w-60 lg:w-80 py-3 px-2 bg-black text-white">
+          <button
+            className="w-4/5 md:w-60 lg:w-80 py-3 px-2 bg-black text-white"
+            type="submit"
+          >
             Salvar
           </button>
         </form>

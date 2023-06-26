@@ -26,13 +26,11 @@ export function PhilosophySection() {
             </div>
             <div className="w-full xl:w-96 pb-16 xl:py-28 flex flex-col justify-start xl:mx-20 ">
               <p className="text-2xl text-black mb-6">
-                私達はあなたを待っている！
+              私達の価値！
               </p>
               <h2 className="font-bold text-3xl mb-6">NOSSOS VALORES</h2>
               <p className="text-lg text-gray-500 mb-6">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Voluptatibus rem ipsa magni, reiciendis modi sunt sequi rerum
-                qui fugiat inventore.
+              Tradição, qualidade e hospitalidade: descubra a verdadeira essência da culinária japonesa em nosso restaurante.
               </p>
             </div>
           </div>

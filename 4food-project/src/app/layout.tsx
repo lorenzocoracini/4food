@@ -26,7 +26,7 @@ export default function RootLayout({ children }: { children: ReactElement }) {
         <AuthContextProvider>
           <Header />
           <CartContextProvider>{children}</CartContextProvider>
-          <Footer />
+          {/* <Footer /> */}
         </AuthContextProvider>
       </body>
     </html>

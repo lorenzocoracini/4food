@@ -18,11 +18,11 @@ export function ComeAndVisitUs() {
             <p className="text-xl font-bold tracking-wider">RESERVA</p>
             <div className="w-full h-1 border-b border-solid pt-6 mb-8"></div>
             <p className="py-1 mb-8 text-xl font-bold tracking-widest">
-              OPENING TIMES
+              FUNCIONAMENTO
             </p>
-            <p className="py-1 text-lg mb-6">Weekdays 9:20 - 22:00</p>
-            <p className="py-1 text-lg mb-6">Saturdays 10:00 - 22:00</p>
-            <p className="py-1 text-lg">Sundays 11:00 - 22:00</p>
+            <p className="py-1 text-lg mb-6">Dias de Semana 9:20 - 22:00</p>
+            <p className="py-1 text-lg mb-6">Sábados 10:00 - 22:00</p>
+            <p className="py-1 text-lg">Domingos 11:00 - 22:00</p>
             <p className="py-16 w-64 font-bold text-center tracking-widest">
               <strong>RESERVE SUA MESA PARA ALMOÇO OU JANTAR</strong>
             </p>
@@ -36,9 +36,7 @@ export function ComeAndVisitUs() {
             </p>
             <h1 className="font-bold text-4xl mb-6">Venha e nos visite!</h1>
             <p className="text-lg text-gray-500 mb-6">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Voluptatibus rem ipsa magni, reiciendis modi sunt sequi rerum qui
-              fugiat inventore.
+              Convidamos você a embarcar em uma jornada culinária inesquecível, explorando os segredos da cozinha japonesa em nosso restaurante.
             </p>
           </div>
         </div>

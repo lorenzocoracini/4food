@@ -1,12 +1,14 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
+import { useAuth } from "hooks/useAuth";
 import Link from "next/link";
+import { useState } from "react";
 
 export function IntroductionSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+
+  const {user} = useAuth();
+
 
   function goOrder() {
     console.log("Vamos pedir um sushizin?");
@@ -24,15 +26,14 @@ export function IntroductionSection() {
           O MELHOR SUSHI DA CIDADE
         </h1>
         <p className="text-gray-500 text-xl px-8 xl:px-96">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus
-          rem ipsa magni, reiciendis modi sunt sequi rerum qui fugiat inventore.
+        Delicie-se com a autêntica culinária japonesa e mergulhe em uma experiência gastronômica única. 
         </p>
-        <Link href="/cardapio" className="block px-3 py-4">
+        {user.id ? <Link href="/cardapio" className="block px-3 py-4">
           <button
             className="px-24 my-2 bg-black
             text-white
             py-6
-            mt-20
+            mt-16
             hover:opacity-80
             hover:-translate-y-1
             duration-300
@@ -40,7 +41,21 @@ export function IntroductionSection() {
           >
             Fazer Pedido
           </button>
-        </Link>
+        </Link> : <Link href="/login" className="block px-3 py-4">
+          <button
+            className="px-24 my-2 bg-black
+            text-white
+            py-6
+            mt-26
+            hover:opacity-80
+            hover:-translate-y-1
+            duration-300
+            text-xl"
+          >
+            Fazer Pedido
+          </button>
+        </Link>}
+        
       </motion.div>
     </section>
   );
