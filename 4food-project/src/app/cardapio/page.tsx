@@ -194,21 +194,24 @@ export default function Cardapio() {
       >
         <ItemMenu
           price={19.99}
-          name="Sushi"
+          name="Sushi 1"
           image={exemplo}
           description="Sushizinho muito saboroso"
+          id={1}
         />
         <ItemMenu
           price={19.99}
-          name="Sushi"
+          name="Sushi 2"
           image={exemplo}
           description="Sushizinho muito saboroso"
+          id={2}
         />
         <ItemMenu
           price={19.99}
-          name="Sushi"
+          name="Sushi 3"
           image={exemplo}
           description="Sushizinho muito saboroso"
+          id={3}
         />
         <ItemMenu
           price={19.99}

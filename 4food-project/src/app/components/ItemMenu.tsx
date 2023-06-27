@@ -30,7 +30,6 @@ export function ItemMenu(props: ProductProps) {
             ...props,
             quantity
         }
-        console.log(typeof addProductToCart)
         addProductToCart(productToAdd)
     }
 
