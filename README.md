@@ -2,6 +2,12 @@
 
 O 4Food é um website de um restaurante de sushi, desenvolvido em TypeScript com React, Next.js, Express e PostgreSQL. O projeto permite que os usuários façam login ou registro, escolham itens do cardápio, adicionem ao carrinho e finalizem a compra com a localização da entrega.
 
+## **Estudantes**
+Diogo Neves Soares (22100896)
+Guilherme Cardoso de Oliveira (22100901) 
+Lorenzo Coracini de Oliveira (20100858)
+Pedro Henrique Nascimento Rocha (22100918)
+
 ## **Tecnologias Utilizadas**
 
 - React
